@@ -1,20 +1,21 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
+#include "shape.h"
 
 class Triangle: public Shape{
 public:
   Triangle(float x1, float y1, float x2, float y2, float x3, float y3);
-  ~Triange();
-  const float area();
+  ~Triangle();
+  float area() const;
   string getType();
-  float circumference();
-  float position();
-  bool isConvex();
-  float distance(Shape s);
+  float circumference() const;
+  string position() const;
+  bool isConvex() const;
+  float distance(Shape *s) const;
 private:
-float vertices[6];
-float getCordinates(int cordinate);
-float distanceOfPoints(float x1, float x2, float y1, float y2);
+float *verticies;
+float getCordinates(int cordinate) const;
+float distanceOfPoints(float x1, float x2, float y1, float y2) const;
 }
 
 

@@ -1,22 +1,23 @@
 #ifndef POLYGON_H
 #define POLYGON_H
+#include "shape.h"
 
 class Polygon: public Shape{
 public:
-  Polygon(int nrOfVerticies);
+  Polygon(int nrOfVerticies, float *arr[]);
   ~Polygon();
   string getType();
-  float area();
-  float circumference();
-  float position();
-  bool isConvex();
-  float distance(Shape s);
+  float area() const;
+  float circumference() const;
+  string position() const;
+  bool isConvex() const;
+  float distance(Shape *s) const;
 
 private:
   int nrOfVerticies;
-  float vertices[];
+  float *verticies;
 float getCordinates(int cordinate);
-float distanceOfPoints(float x1, float x2, float y1, float y2);
+float distanceOfPoints(float x1, float x2, float y1, float y2) const;
 };
 
 #endif

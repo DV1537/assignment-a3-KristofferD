@@ -1,15 +1,21 @@
 #ifndef POINT_H
 #define POINT_H
+#include<string>
+#include "shape.h"
 
-class Point: public Shape {
-  public:
-    Point(int x1, int y1);
-    float area() const;
-    string getType() const;
-    float circumference() const;
-    float position() const;
-    bool isConvex() const;
-    float distance(Shape s) const;
-  private:
-  int vertices[2];
+using namespace std;
+
+class Point : public Shape {
+public:
+	Point(float x1, float y1);
+	float area() const;
+	string getType();
+	float circumference() const;
+	string position() const;
+	bool isConvex() const;
+	float distance(Shape *s) const;
+	~Point();
+private:
+	float verticies[2];
+}
 #endif;

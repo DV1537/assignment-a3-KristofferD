@@ -1,51 +1,56 @@
 #include <cmath>
 #include <string>
-#include "POINT_H"
+#include "point.h"
+#include "shape.h"
 
 
+  Point::Point(float x, float y){
+    
+  this->verticies[0] = x;
+  this->verticies[1] = y;
+  };
+  
 
-  Point(float x, float y){
-    float vertices[2];
-  this->vertices[0] = x;
-  this->vertices[1] = y;
-};
-
-
-  float area(){
+  float Point::area() const
+  {
     return -1.0;
   };
 
 
-  string getType()const{
-    return "Point"};
-
-
-  float circumference()const {
-    return -1;
+  string Point::getType()
+  {
+	  return "Point";
   };
 
 
-  string position(){
-    string p = to_string(vertices[0]) + ' ' + to_string(vertices[1];)
+  float Point::circumference()const {
+    return -1;
+  };
+
+  string Point::position() const{
+	  string p = to_string(verticies[0]) + ' ' + to_string(verticies[1]);
     return p;
   };
 
 
-  bool isConvex()const {
+  bool Point::isConvex()const {
     return false;
   };
 
 
-float distance(Shape s){
-std::string tempCenter = s.position();
+float Point::distance(Shape *s)const{
+std::string tempCenter = s->position();
 std::string::size_type sz;
 float x = std::stof (tempCenter,&sz);
-float y = std::stof (tempcenter.substr(sz));
-x = fmax(x,vertices[0]) - fmin(x,vertices[0]);
+float y = std::stof (tempCenter.substr(sz));
+x = fmax(x,verticies[0]) - fmin(x,verticies[0]);
 x *= x; //x = pow(x, 2);
-y = fmax(y,vertices[1]) - fmin(y,vertices[1]);
+y = fmax(y,verticies[1]) - fmin(y,verticies[1]);
 y *= y; //y = pow(y, 2);
 float distance = x + y;
 distance = sqrt(distance);
   return distance;
 }
+Point::~Point()
+{
+};

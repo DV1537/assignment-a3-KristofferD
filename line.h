@@ -1,18 +1,24 @@
 #ifndef LINE_H
 #define LINE_H
+#include "shape.h"
+#include <string>
+using namespace std;
 
 class Line: public Shape{
 public:
-  Line();
+  Line(float x1, float y1, float x2, float y2);
   ~Line();
   string getType();
-  float area();
-  float circumference();
-  float position();
-  bool isConvex();
-  float distance(Shape s);
+  float area() const;
+  float circumference() const;
+  string position() const;
+  bool isConvex() const;
+  float distance(Shape *s) ;
+  Line operator=(const Line& other);
+  ostream & operator<<(ostream & other);
+
 private:
-  float vertices[6];
+  float verticies[6];
   float getCordinates(int cordinate);
   float distanceOfPoints(float x1, float x2, float y1, float y2);
 }

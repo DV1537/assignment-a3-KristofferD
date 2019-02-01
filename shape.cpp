@@ -1,33 +1,16 @@
-#include "SHAPE_H"
+#include "shape.h"
 
-Shape(){
+
+Shape::Shape(){
 };
-virtual ~Shape(){};
-
-virtual string getType() = 0;
-string area();
-float circumference();
-float position();
-bool isConvex();
-float distance(Shape s);
-Shape operator=(const &Shape other){
-  if(this == other){
-    return *this;
-  }
-  else{
-  nrOfCordinates = other.nrOfCordinates;
-  delete[] this.vertices;
-  *this.vertices = nullptr;
-  *this.vertices = new float[nrOfVerticies];
-for(int i = 0; i < nrOfVerticies; i++){
-  *this.vertices[i] = other.vertices[i];
+Shape::~Shape(){};
+float Shape::area() const { return -1; };
+float Shape::circumference() const { return -1; };
+string Shape::position() const { return ""; };
+bool Shape::isConvex() const { return false; };
+float Shape::distance(Shape *s) const { return 0.0; }
+float Shape::distanceOfPoints(float x1, float x2, float y1, float y2)
+{
+	return 0.0f;
 }
-  return *this;
-}
-Shape operator<<(){
-string s = "x\ty\n";
-for(int i = 0; i < this.nrOfvertices; i+= 2){
-  s += to_string(this.vertices[i]) + "\t" + to_string(this.vertices[i+1]) + "\n";
-}
-  return s;
-}
+;

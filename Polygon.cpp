@@ -1,65 +1,77 @@
-#include "POLYGON_H"
-Polygon(int nrOfVerticies){
-  this->float* vertices = new float[nrOfVerticies*2];
+#include "polygon.h"
+
+Polygon::Polygon(int nrOfVerticies, float *arr[]){
+  this->verticies = new float[nrOfVerticies];
 };
-~Polygon();
-string getType(){
+Polygon::~Polygon() { delete verticies; };
+string Polygon::getType(){
   return "Polygon";
 };
-float area(){
+float Polygon::area() const{
   float area = 0.0;
   int i = 0;
-  while(i < nrOfPoints*2)
-      area += vertices[i]*vertices[i+2]+vertices[i+1]*vertices[i+3];
+  while(i < nrOfVerticies *2){
+      area += verticies[i]*verticies[i+2]+verticies[i+1]*verticies[i+3];
     i+= 2;
   }
-area += vertices[i]*vertices[1]+vertices[i+1]*vertices[0];
+area += verticies[i]*verticies[1]+verticies[i+1]*verticies[0];
 area /= 2.0;
 return area; //Will be false if the polygon is self intersecting.
 };
-float circumference(){
+float Polygon::circumference() const{
 int i = 0;
 float circ = 0.0;
-while(i < nrOfPoints){
-  circ += distancePoints(vertices[i], vertices[i+2], vertices[i+1], vertices[i+3]);
+while(i < nrOfVerticies){
+  circ += distanceOfPoints(verticies[i], verticies[i+2], verticies[i+1], verticies[i+3]);
   i+2;
 }
-  circ += distancePoints(vertices[i], vertices[0], vertices[i+1], vertices[1]);
+  circ += distanceOfPoints(verticies[i], verticies[0], verticies[i+1], verticies[1]);
   return circ;
+}
+float Polygon::getCordinates(int cordinate)
+{
+	return verticies[cordinate];
+}
+float Polygon::distanceOfPoints(float x1, float x2, float y1, float y2)const
+{
+	float a = x1 > x2 ? x1 - x2 : x2 - x1;
+	a *= a;
+	float b = y1 > y2 ? y1 - y2 : y2 - y1;
+	b *= b;
+	return sqrtf(a + b);
 };
 
 
-float position();
-float minY = vertices[1];
-float maxY = vertices[1];
-float minX = vertices[0];
-float maxX = vertices[0]
-for(int i = 2; i < nrOfPoints; i + 2;)
+string Polygon::position() const{
+float minY = verticies[1];
+float maxY = verticies[1];
+float minX = verticies[0];
+float maxX = verticies[0];
+for(int i = 2; i < nrOfVerticies; i + 2)
 {
-  if(minY > vertices[i+1]){minY = vertices[i+1];}
-  else if(maxY < vertices[i+1]){maxY = vertices[i+1];}
+  if(minY > verticies[i+1]){minY = verticies[i+1];}
+  else if(maxY < verticies[i+1]){maxY = verticies[i+1];}
 
-  if (minX > vertices[i]){minX = vertices[i];}
-  else if(maxX < vertices[i]{maxX = vertices[i];}
+  if (minX > verticies[i]){minX = verticies[i];}
+  else if(maxX < verticies[i]){maxX = verticies[i];}
   }
 float centerX = minX +((maxX - minX)/2.0);
 float centerY = minY +((maxY - minY)/2.0);
 string center = to_string(centerX) + "" + to_string(centerY);
+return center;
 }
 
-bool isConvex(){ //https://stackoverflow.com/questions/471962/how-do-i-efficiently-determine-if-a-polygon-is-convex-non-convex-or-complex
+bool Polygon::isConvex() const{ //https://stackoverflow.com/questions/471962/how-do-i-efficiently-determine-if-a-polygon-is-convex-non-convex-or-complex
   //False positive if self-intersecting.
-  if (vertices.size() < 4)
-         return true;
-
+	if (nrOfVerticies < 4) return true;
      bool sign = false;
 
-     for(int i = 0; i < n; i++)
+     for(int i = 0; i < nrOfVerticies; i++)
      {
-         float dx1 = vertices(i);
-         float dy1 = vertices(i +1);
-         float dx2 = vertices(i+2);
-         float dy2 = vertices(i+3);
+         float dx1 = verticies[i];
+         float dy1 = verticies[i +1];
+         float dx2 = verticies[i+2];
+         float dy2 = verticies[i+3];
          float zcrossproduct = dx1 * dy2 - dy1 * dx2;
 
          if (i == 0)
@@ -67,18 +79,18 @@ bool isConvex(){ //https://stackoverflow.com/questions/471962/how-do-i-efficient
          else if (sign != (zcrossproduct > 0))
              return false;
      }
+	 return false;
  }
-};
 
 
-float distance(Shape s){
-  std::string tempCenter = s.position();
+float Polygon::distance(Shape *s) const{
+  std::string tempCenter = s->position();
   std::string::size_type sz;
   float x = std::stof (tempCenter,&sz);
-  float y = std::stof (tempcenter.substr(sz));
-  x = fmax(x,vertices[0]) - fmin(x,vertices[0]);
+  float y = std::stof (tempCenter.substr(sz));
+  x = fmax(x,verticies[0]) - fmin(x,verticies[0]);
   x *= x; //x = pow(x, 2);
-  y = fmax(y,vertices[1]) - fmin(y,vertices[1]);
+  y = fmax(y,verticies[1]) - fmin(y,verticies[1]);
   y *= y; //y = pow(y, 2);
   float distance = x + y;
   distance = sqrt(distance);
